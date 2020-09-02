@@ -6,3 +6,5 @@ Execution steps :
 from sudoku_solver import main
 main('0000.png')
 ```
+
+The directory `temp` will be created as a result.
