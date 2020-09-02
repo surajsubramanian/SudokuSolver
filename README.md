@@ -3,23 +3,15 @@
 ## sudoku_solver
 Execution steps : 
 ```python3
-from sudoku_solver import main
-main('0000.png')
+python main.py
 ```
 
-The directory `temp` will be created as a result.
+## WORKING
 
-## backtracking
+`sudoku_solver` splits given image into 81 images and stores them in the `temp` directory. Each of these images represent one box in the 9x9 grid
 
-Uses backtracking to generate solved sudoku board from the input board
+`digit_recognizer` recognizes each of the 81 images and stores them in an array passing it to the `backtracking` function which solves the sudoku problem.
 
-## TASKS :
-
-1. Digit recognizer - with weights saved in a file (can be downloaded from net itself)
-
-Our system should load the stored weights and make predictions.
-
-2. Create `main.py` which first calls `sudoku_solver`, then `digit_recognizer` and finally passes the digits recognized stored in 9x9 array to the `backtracking` code
 
 ## REFERENCES 
 
