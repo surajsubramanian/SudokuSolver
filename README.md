@@ -13,7 +13,7 @@ The directory `temp` will be created as a result.
 
 Uses backtracking to generate solved sudoku board from the input board
 
-**TASKS :**
+## TASKS :
 
 1. Digit recognizer - with weights saved in a file (can be downloaded from net itself)
 
