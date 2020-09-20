@@ -9,25 +9,42 @@ import image_slicer
 from PIL import Image
 
 root = os.getcwd()
-def pre_process_image(img, skip_dilate=False):
-    proc = cv2.GaussianBlur(img.copy(), (9, 9), 0)
-    proc = cv2.adaptiveThreshold(proc, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
-    proc = cv2.bitwise_not(proc, proc)
-    if not skip_dilate:
-        kernel = np.ones((1,1),np.uint8)
-        proc = cv2.dilate(proc, kernel)
-    return proc
+def imageProcessor(img_path):
+    image  = cv2.imread(img_path)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (5,5), 0)
+    thresh = cv2.adaptiveThreshold(blur, 255, 1, 1, 11, 2)
+    contours,_ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    return image, gray, thresh, contours
 
-def find_corners_of_largest_polygon(img):
-    """Finds the 4 extreme corners of the largest contour in the image."""
-    contours, h = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # Find contours
-    contours = sorted(contours, key=cv2.contourArea, reverse=True)  # Sort by area, descending
-    polygon = contours[0]  # Largest image
-    bottom_right, _ = max(enumerate([pt[0][0] + pt[0][1] for pt in polygon]), key=operator.itemgetter(1))
-    top_left, _ = min(enumerate([pt[0][0] + pt[0][1] for pt in polygon]), key=operator.itemgetter(1))
-    bottom_left, _ = min(enumerate([pt[0][0] - pt[0][1] for pt in polygon]), key=operator.itemgetter(1))
-    top_right, _ = max(enumerate([pt[0][0] - pt[0][1] for pt in polygon]), key=operator.itemgetter(1))
-    return [polygon[top_left][0], polygon[top_right][0], polygon[bottom_right][0], polygon[bottom_left][0]]
+def bestContours(image, contours):
+    max_area = 0
+    c = 0
+    for i in contours:
+        area = cv2.contourArea(cv2.UMat(i))
+        if area > 1000:
+            if area > max_area:
+                max_area = area
+                best_cnt = i
+        c+=1
+    return best_cnt
+
+def maskCreator(gray, best_cnt, image, contours):
+    mask = np.zeros((gray.shape),np.uint8)
+    cv2.drawContours(mask,[best_cnt],0,255,-1)
+    cv2.drawContours(mask,[best_cnt],0,0,2)
+
+    out = np.zeros_like(gray)
+    out[mask == 255] = gray[mask == 255]
+    blur = cv2.GaussianBlur(out, (11,11), 0)
+    thresh = cv2.adaptiveThreshold(blur, 255, 1, 1, 11, 2)
+    c = 0
+    for i in contours:
+        area = cv2.contourArea(i)
+        if area > 1000/2:
+            cv2.drawContours(image, contours, c, (0, 255, 0), 3)
+        c+=1
+    return image,out
 
 def distance_between(p1, p2):
     """Returns the scalar distance between two points"""
@@ -49,6 +66,22 @@ def crop_and_warp(img, crop_rect):
     m = cv2.getPerspectiveTransform(src, dst)
     return cv2.warpPerspective(img, m, (int(side), int(side)))
 
+def boxFinder(image, out):
+    final = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    contours, h = cv2.findContours(out.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours = sorted(contours, key=cv2.contourArea, reverse=True)
+    polygon = contours[0]
+
+    bottom_right, _ = max(enumerate([pt[0][0] + pt[0][1] for pt in polygon]), key=operator.itemgetter(1))
+    top_left, _ = min(enumerate([pt[0][0] + pt[0][1] for pt in polygon]), key=operator.itemgetter(1))
+    bottom_left, _ = min(enumerate([pt[0][0] - pt[0][1] for pt in polygon]), key=operator.itemgetter(1))
+    top_right, _ = max(enumerate([pt[0][0] - pt[0][1] for pt in polygon]), key=operator.itemgetter(1))
+    box = [polygon[top_left][0], polygon[top_right][0], polygon[bottom_right][0], polygon[bottom_left][0]]
+
+    gray = crop_and_warp(final, box)
+    return gray
+
 def infer_grid(img):
     """Infers 81 cell grid from a square image."""
     squares = []
@@ -67,51 +100,33 @@ def display_rects(in_img, rects, colour=255):
     for rect in rects:
         img = cv2.rectangle(img, tuple(int(x) for x in rect[0]), tuple(int(x) for x in rect[1]), colour)
     return img
-
-def image_processor(img_path):
-    image  = cv2.imread(img_path)
-    gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray,(5,5),0)
-    thresh = cv2.adaptiveThreshold(blur,255,1,1,11,2)
-    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
     
-    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-    ret, threshold1 = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
-    threshold2 = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
-
-    img = threshold2
-    processed = img
-    corners = find_corners_of_largest_polygon(processed)
-    
-    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-    corners = find_corners_of_largest_polygon(img)
-    cropped = crop_and_warp(img, corners)
-    squares = infer_grid(cropped)
-    fin = []
-    image = display_rects(cropped, squares)
-    image = Image.fromarray(image)
-    
-    dir_name = 'temp'
-    if dir_name in os.listdir():
-        shutil.rmtree(dir_name)
-    os.mkdir(dir_name)
-    os.chdir(dir_name)
-    image.save('my.png')
-    a = image_slicer.slice('my.png', 81)
-    
-def black_white_converter(images):
-    os.chdir(os.path.join(root, 'temp'))
-    for img in images:
-        if '.png' in img:
-            image = cv2.imread(os.path.join(root, 'temp', img), cv2.IMREAD_GRAYSCALE)
-            gray = cv2.resize(image, (256,256))
-            result = gray[40:216, 40:216]
-            ans = cv2.bitwise_not(result)
-            ans1 = (ans//125)*255
-            cv2.imwrite(img, ans1)
 
 def main(img_path):
-    image_processor(img_path)
-    os.remove(os.path.join(os.getcwd(), 'my.png'))
-    images = sorted(os.listdir())
-    black_white_converter(images)
+    image, gray, thresh, contours = imageProcessor(img_path)
+    best_cnt = bestContours(image, contours)
+    image,out = maskCreator(gray, best_cnt, image, contours)
+    gray = boxFinder(image, out)
+    
+    squares = infer_grid(gray)
+    image = display_rects(gray, squares)
+    image1 = Image.fromarray(image)
+    image1.save('my.png')
+    a = image_slicer.slice('my.png', 81)
+
+    if 'temp' in os.listdir():
+        shutil.rmtree('temp')
+    os.mkdir('temp')
+    for i,img in enumerate(sorted([file for file in os.listdir() if 'my_' in file])):
+        src, dst = os.path.join(root, img), os.path.join(root, 'temp')
+        shutil.move(src, dst)
+
+    for img_name in os.listdir('temp'):
+        if '.png' in img_name:
+            img = cv2.imread(os.path.join(root, 'temp', img_name))
+            img[img > 50] = 255
+            image_inverted = cv2.bitwise_not(img)
+            cv2.imwrite(os.path.join(root, 'temp', img_name), image_inverted)
+
+def sudoku_solver(img_path):
+    main(img_path)
