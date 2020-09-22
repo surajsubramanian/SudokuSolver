@@ -63,12 +63,12 @@ The list of length 81 is converted into a 9x9 array. Later we solve this board u
 
 <figure>
     <figcaption>When the code is executed : </figcaption>
-    <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/gray2.png" width="300" alt='missing'/>
+    <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/output1.png" width="300" alt='missing'/>
 </figure>
 
 <figure>
     <figcaption>...</figcaption>
-    <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/my.png" width="300" alt='missing'/>
+    <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/output2.png" width="300" alt='missing'/>
 </figure>
 
 ## REFERENCES 
