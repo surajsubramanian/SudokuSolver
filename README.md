@@ -76,8 +76,15 @@ The list of length 81 is converted into a 9x9 array. Later we solve this board u
 
 <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/output2.png" alt='missing'/>
 
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Better techniques for extracting digits from the sudoku image and digit recognition could be done.
+
+Please make sure to update tests as appropriate.
+
 ## REFERENCES 
 
 [Python solution to solve sudoku using backtracking in leetcode](https://leetcode.com/problems/sudoku-solver/discuss/15959/Accepted-Python-solution)
 
 [Digit Recognition using OpenCV and pytesseract](https://stackoverflow.com/a/58032585/10077354)
+
+
