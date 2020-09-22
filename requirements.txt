@@ -1,0 +1,4 @@
+pytesseract
+opencv-python
+numpy
+pytest-shutil
