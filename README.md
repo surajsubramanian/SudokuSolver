@@ -14,7 +14,17 @@ Here the path of the input image is passed as a command line argument.
 ## Working
 
 
-### `sudoku_solver`
+### [sudoku_solver](https://github.com/SurajSubramanian/SudokuSolver/blob/master/sudoku_solver.py)
+
+<figure>
+    <img src="../images/input.png" width="500" alt='missing'/>
+    <figcaption>The input sudoku image</figcaption>
+</figure>
+
+<figure>
+    <img src="../images/gray.png" width="500" alt='missing'/>
+    <figcaption>Converting image to grayscale</figcaption>
+</figure>
 
 
 
