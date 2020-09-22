@@ -44,6 +44,7 @@ Preprocessing sudoku image (converting to grayscale, blurring, finding contours 
 </figure>
 
 Processing of a single box in the sudoku board 
+
 <p float="left" align="middle">
    <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/my_01_04_initial.png" width="300" />
     <img src="/https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/my_01_04_final.png" width="300" /> 
