@@ -43,10 +43,8 @@ Preprocessing sudoku image (converting to grayscale, blurring, finding contours 
     <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/my.png" width="300" alt='missing'/>
 </figure>
 
-Processing of a single box in the sudoku board 
-
 <figure>
-    <figcaption>The final image that is divided into 81 images</figcaption>
+    <figcaption>Processing of a single box in the sudoku board</figcaption>
     <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/my_01_04_initial.png" width="200" alt='missing'/>
 </figure>
 
