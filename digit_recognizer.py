@@ -2,16 +2,8 @@ import os
 import numpy as np
 import cv2
 import torch
-import torch.nn as nn
-from torchvision import transforms
-from model import Net
 import pytesseract
-
 root = os.getcwd()
-
-model = Net()
-model.load_state_dict(torch.load('mnist_weights.pth', map_location = torch.device('cpu')))
-model.eval()
 sudoku_board = []
 
 def getNumber(image):

@@ -1,16 +1,21 @@
 # Sudoku solver using Computer Vision and Backtracking
 
-## sudoku_solver
-Execution steps : 
+## Installation
+The repository can either be cloned or downloaded as a zip.
+
+## Usage
+Execute the code as follows :
 ```python3
-python main.py
+python main.py 'input.png'
 ```
 
-## WORKING
+Here the path of the input image is passed as a command line argument.
 
-`sudoku_solver` splits given image into 81 images and stores them in the `temp` directory. Each of these images represent one box in the 9x9 grid
+## Working
 
-`digit_recognizer` recognizes each of the 81 images and stores them in an array passing it to the `backtracking` function which solves the sudoku problem.
+
+### `sudoku_solver`
+
 
 
 ## REFERENCES 
