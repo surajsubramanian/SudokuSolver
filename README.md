@@ -15,4 +15,6 @@ python main.py
 
 ## REFERENCES 
 
-[Python solution in leetcode](https://leetcode.com/problems/sudoku-solver/discuss/15959/Accepted-Python-solution)
+[Python solution to solve sudoku using backtracking in leetcode](https://leetcode.com/problems/sudoku-solver/discuss/15959/Accepted-Python-solution)
+
+[Digit Recognition using OpenCV and pytesseract](https://stackoverflow.com/a/58032585/10077354)
