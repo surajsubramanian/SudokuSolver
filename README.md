@@ -1,4 +1,4 @@
-# Sudoku solver using Computer Vision and Backtracking
+# Sudoku solver using Computer Vision, OCR and Backtracking
 
 ## Installation
 The repository can either be cloned or downloaded as a zip.
