@@ -91,4 +91,5 @@ Please make sure to update tests as appropriate.
 
 [Digit Recognition using OpenCV and pytesseract](https://stackoverflow.com/a/58032585/10077354)
 
+[Sudoku Grabber in OpenCV](https://aishack.in/tutorials/sudoku-grabber-opencv-plot/)
 
