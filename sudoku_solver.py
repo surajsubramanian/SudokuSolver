@@ -124,9 +124,8 @@ def main(img_path):
     for img_name in os.listdir('temp'):
         if '.png' in img_name:
             img = cv2.imread(os.path.join(root, 'temp', img_name))
-            img[img > 50] = 255
-            image_inverted = cv2.bitwise_not(img)
-            cv2.imwrite(os.path.join(root, 'temp', img_name), image_inverted)
+            img[img > 60] = 255
+            cv2.imwrite(os.path.join(root, 'temp', img_name), img)
 
 def sudoku_solver(img_path):
     main(img_path)

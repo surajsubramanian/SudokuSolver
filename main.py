@@ -4,5 +4,4 @@ from backtracking import backtracking
 
 sudoku_solver('0000.png')
 board = digit_recognizer()
-print(board)
 backtracking(board)

@@ -1,4 +1,5 @@
 import numpy as np
+from sudoku_printer import printBoard
 
 class Solution:
     def solveSudoku(self, board):
@@ -53,7 +54,9 @@ class Solution:
 def backtracking(board):
     b = np.array(board).reshape(9,9)
     b = b.tolist()
-    print(b)
+    print("\nInput board\n")
+    printBoard(b)
     s = Solution()
     s.solveSudoku(b)
-    print(b)
+    print("\nOutput board\n")
+    printBoard(b)
