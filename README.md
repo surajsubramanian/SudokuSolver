@@ -16,7 +16,7 @@ Here the path of the input image is passed as a command line argument.
 
 ### [sudoku_solver](https://github.com/SurajSubramanian/SudokuSolver/blob/master/sudoku_solver.py)
 
-Preprocessing sudoku image (converting to grayscale, blurring, finding contours and dividing image into 81 squares)
+Preprocessing sudoku image (converting to grayscale, blurring, finding contours and dividing image into 81 squares). Our [stackoverflow question](https://stackoverflow.com/q/63902994/14241803) summarises most of our work in this module.
 
 <figure>
     <figcaption>The input sudoku image</figcaption>
