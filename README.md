@@ -14,7 +14,7 @@ Here the path of the input image is passed as a command line argument.
 ## Working
 
 
-### [sudoku_solver](https://github.com/SurajSubramanian/SudokuSolver/blob/master/sudoku_solver.py)
+### [Image Processing using OpenCV](https://github.com/SurajSubramanian/SudokuSolver/blob/master/sudoku_solver.py)
 
 Preprocessing sudoku image (converting to grayscale, blurring, finding contours and dividing image into 81 squares). Our [stackoverflow question](https://stackoverflow.com/q/63902994/14241803) summarises most of our work in this module.
 
@@ -52,7 +52,7 @@ Preprocessing sudoku image (converting to grayscale, blurring, finding contours 
     <img src="https://github.com/SurajSubramanian/SudokuSolver/blob/master/images/my_01_04_final.png" width="200" alt='missing'/>
 </figure>
 
-### [digit recognizer](https://github.com/SurajSubramanian/SudokuSolver/blob/master/digit_recognizer.py)
+### [Digit Recognizer using pytesseract](https://github.com/SurajSubramanian/SudokuSolver/blob/master/digit_recognizer.py)
 
 (Recognizes the digits from each of the 81 images and stores it in a list)
 
@@ -60,7 +60,7 @@ Preprocessing sudoku image (converting to grayscale, blurring, finding contours 
 - Models trained on MNIST performed poor here as these digits were not handwritten. Hence we used pytesseract. [This](https://stackoverflow.com/a/58032585/10077354) answer was helpful.
 - If the box doesn't contain any number, the list holds `.` in it's place and `0-9` otherwise.
 
-### Checking predicted digits with user
+### Verification of predicted digits with user
 
 Each digit predicted is checked with the user to see if it's predicted correctly. If not, the user will be able to correct it accordingly. 
 
