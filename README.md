@@ -3,6 +3,10 @@
 ## Installation
 The repository can either be cloned or downloaded as a zip.
 
+Install tesseract by following the instructions [here](https://github.com/tesseract-ocr/tessdoc/blob/master/Home.md#macos)
+
+Other requirements can be installed by running `pip install -r requirements.txt`
+
 ## Usage
 Execute the code as follows :
 ```python3
