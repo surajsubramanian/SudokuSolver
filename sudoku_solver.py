@@ -10,6 +10,7 @@ from PIL import Image
 
 root = os.getcwd()
 def imageProcessor(img_path):
+    """ Here we find all possible contours inside the image by blur the image after after converting it into gray scale image. """
     image  = cv2.imread(img_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (5,5), 0)
@@ -18,6 +19,7 @@ def imageProcessor(img_path):
     return image, gray, thresh, contours
 
 def bestContours(image, contours):
+    """ It will return the best contour among all possible contours to crop the sudoku grid from the image. """
     max_area = 0
     c = 0
     for i in contours:
@@ -30,6 +32,7 @@ def bestContours(image, contours):
     return best_cnt
 
 def maskCreator(gray, best_cnt, image, contours):
+    """ Creates the mask which is same size as the sudoku to crop accurately."""
     mask = np.zeros((gray.shape),np.uint8)
     cv2.drawContours(mask,[best_cnt],0,255,-1)
     cv2.drawContours(mask,[best_cnt],0,0,2)
@@ -67,6 +70,7 @@ def crop_and_warp(img, crop_rect):
     return cv2.warpPerspective(img, m, (int(side), int(side)))
 
 def boxFinder(image, out):
+    """ Here we find the four corners of the sudoku inside the image."""
     final = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     contours, h = cv2.findContours(out.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -103,6 +107,8 @@ def display_rects(in_img, rects, colour=255):
     
 
 def main(img_path):
+    """ Here we split the sudoku grid into 81 cells after performing all the below preprocessing methods. """
+
     image, gray, thresh, contours = imageProcessor(img_path)
     best_cnt = bestContours(image, contours)
     image,out = maskCreator(gray, best_cnt, image, contours)
