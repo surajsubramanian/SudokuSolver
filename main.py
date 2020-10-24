@@ -4,7 +4,7 @@ from digit_recognizer import digit_recognizer
 from backtracking import backtracking
 
 def main(img_path):
-    sudoku_solver('0000.png')
+    sudoku_solver(img_path)
     board = digit_recognizer()
     backtracking(board)
 
