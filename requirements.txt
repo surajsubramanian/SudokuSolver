@@ -2,3 +2,5 @@ pytesseract
 opencv-python
 numpy
 pytest-shutil
+image_slicer
+pytesseract
