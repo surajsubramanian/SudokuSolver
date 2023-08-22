@@ -1,6 +1,4 @@
-# Sudoku solver using Computer Vision and Backtracking
-
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+# Sudoku solver
 
 ## Installation
 The repository can either be cloned or downloaded as a zip.
